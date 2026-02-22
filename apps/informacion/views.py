@@ -190,7 +190,7 @@ def pay_service(request):
         origen_id = request.data.get('cuenta_origen')
         pago_servicio=Decimal(request.data.get('monto',0))
         try:
-            client = Cliente.objects.get(id_client=cliente_id)
+            client = Cliente.objects.select_for_update().get(id_client=cliente_id)
         except Cliente.DoesNotExist:
             raise IdentidadInvalidad({'ID':'Este cliente no existe'})
 
